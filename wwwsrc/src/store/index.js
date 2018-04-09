@@ -26,11 +26,15 @@ vue.use(vuex);
 export default new vuex.Store({
     state: {
         user: {},
-        vaults: []
+        vaults: [],
+        activeVault: {}
     },
     mutations: {
         setVaults(state,payload) {
             state.vaults = payload
+        },
+        setActiveVault(state, payload) {
+            state.activeVault = payload;
         },
         loginUser(state, payload) {
             state.user = payload
@@ -44,13 +48,26 @@ export default new vuex.Store({
             api.post('vaults', payload)
                 .then(res => {
                     console.log("RES: ", res)
-                    commit('setVaults', res.data);
+                    dispatch('getUserVaults', res.data);
                 })
                 .catch(err => {
                     console.log(err);
                 })
         },
-
+        getUserVaults({commit, dispatch}, payload) {
+            api.get('vaults/report/'+ payload.userId)
+                .then(res => {
+                    console.log("USER VAULTS: ", res.data)
+                    commit('setVaults', res.data)
+                })
+        },
+        getVaultById({commit, dispatch}, payload) {
+            api.get('vaults' + payload.vaultId)
+                .then(res => {
+                    console.log(res);
+                    commit('setActiveVault', res.data)
+                })
+        },
         //region START AUTH ROUTES
         login({ commit, dispatch }, payload) {
             // console.log("Attempting to log in user: ", payload)
@@ -70,6 +87,8 @@ export default new vuex.Store({
                 .then(res => {
                     // console.log("AUTH RES.DATA", res.data)
                     commit('loginUser', res.data)
+                    res.data["userId"] = res.data.id
+                    dispatch('getUserVaults', res.data)
                 })
                 .catch(err => {
                     console.log(err)

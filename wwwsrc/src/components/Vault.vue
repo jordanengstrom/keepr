@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h4>vault name</h4>
+        <h4>HELLO WORLD</h4>
     </div>
 </template>
 

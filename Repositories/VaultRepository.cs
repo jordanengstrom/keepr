@@ -48,8 +48,7 @@ namespace keepr.Repositories
 
         public IEnumerable<Vault> GetUserVaults(string userId)
         {
-            // IEnumerable<Vault> Vaults = _db.QueryMultiple
-            return _db.QueryFirstOrDefault(@"
+            return _db.Query<Vault>(@"
                 SELECT * FROM vaults WHERE userId = @UserId
             ", new {UserId = userId});
         }
@@ -69,8 +68,10 @@ namespace keepr.Repositories
         {
             var i = _db.Execute(@"
                 UPDATE vaults SET
+                    id = @Id,
                     name = @Name,
-                    description = @Description
+                    description = @Description,
+                    userId = @UserId
                 WHERE id = @Id
             ", vaultData);
             if (i > 0)
