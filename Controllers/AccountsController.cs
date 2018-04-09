@@ -99,7 +99,7 @@ namespace keepr.Controllers
     public UserReturnModel Authenticate()
     {
       var user = HttpContext.User;
-      var id = user.Identity.Name;
+      string id = user.Identity.Name;
       return _repo.GetUserById(id);
     }
 

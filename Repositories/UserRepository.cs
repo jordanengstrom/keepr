@@ -12,6 +12,7 @@ namespace keepr.Repositories
     {
       _db = db;
     }
+
     public UserReturnModel Register(UserCreateModel userData)
     {
       //Generate an ID
@@ -33,7 +34,7 @@ namespace keepr.Repositories
       // run a sql command
       var success = _db.Execute(@"
         INSERT INTO users(
-          userId,
+          id,
           username, 
           email,
           password
@@ -75,13 +76,13 @@ namespace keepr.Repositories
           Email = user.Email
         };
       }
-      throw new Exception("Invalid Credentials");
+      throw new Exception("`Invalid Credentials");
     }
 
     public UserReturnModel GetUserById(string id)
     {
       User user = _db.QueryFirstOrDefault<User>(@"
-        SELECT * FROM users WHERE userId = @Id
+        SELECT * FROM users WHERE id = @Id
       ", new { Id = id });
 
       if (user == null) { throw new Exception("Oh Boy something very bad happened"); }

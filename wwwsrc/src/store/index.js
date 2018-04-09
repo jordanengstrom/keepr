@@ -25,9 +25,13 @@ vue.use(vuex);
 
 export default new vuex.Store({
     state: {
-        user: {}
+        user: {},
+        vaults: []
     },
     mutations: {
+        setVaults(state,payload) {
+            state.vaults = payload
+        },
         loginUser(state, payload) {
             state.user = payload
         },
@@ -37,10 +41,9 @@ export default new vuex.Store({
     },
     actions: {
         addVault({ commit, dispatch }, payload) {
-            console.log("ADDVAULT PAYLOAD: ", payload);
             api.post('vaults', payload)
                 .then(res => {
-                    console.log("RES.DATA: ", res.data)
+                    console.log("RES: ", res)
                     commit('setVaults', res.data);
                 })
                 .catch(err => {
@@ -65,8 +68,8 @@ export default new vuex.Store({
         authenticate({ commit, dispatch }) {
             auth.get('authenticate')
                 .then(res => {
-                    console.log(res)
-                    commit('loginUser', res.config.data)
+                    // console.log("AUTH RES.DATA", res.data)
+                    commit('loginUser', res.data)
                 })
                 .catch(err => {
                     console.log(err)

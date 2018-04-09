@@ -9,10 +9,10 @@
 -- );
 
 -- CREATE TABLE vaults (
---     vaultId int NOT NULL AUTO_INCREMENT,
+--     id int NOT NULL AUTO_INCREMENT,
 --     name VARCHAR(20) NOT NULL,
 --     description VARCHAR(255) NOT NULL,
---     userId int,
+--     userId VARCHAR(255) NOT NULL,
 --     INDEX userId (userId),
 --     FOREIGN KEY (userId)
 --         REFERENCES users(id)

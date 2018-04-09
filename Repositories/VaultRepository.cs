@@ -27,7 +27,7 @@ namespace keepr.Repositories
             // run a sql command
             var success = _db.Execute(@"
         INSERT INTO vaults(
-          vaultId,
+          id,
           name, 
           description,
           userId
@@ -40,31 +40,27 @@ namespace keepr.Repositories
       ", vault);
             if (success < 1)
             {
-                throw new Exception("EMAIL IN USE");
+                throw new Exception("vault exception");
             }
             // return created vault
             return vault;
         }
 
-        // public List<Vault> GetAllVaults()
-        // {
-        //     var i = _db.Execute(@"
-        //         SELECT * FROM vaults
-        //     ");
-        //     if (i > 0)
-        //     {
-        //         // return List;
-        //     }
-        //     return null;
-        // }
+        public IEnumerable<Vault> GetUserVaults(string userId)
+        {
+            // IEnumerable<Vault> Vaults = _db.QueryMultiple
+            return _db.QueryFirstOrDefault(@"
+                SELECT * FROM vaults WHERE userId = @UserId
+            ", new {UserId = userId});
+        }
 
         public Vault GetVaultById(int id)
         {
             Vault vault = _db.QueryFirstOrDefault<Vault>(@"
-        SELECT * FROM vaults WHERE vaultId = @Id
+        SELECT * FROM vaults WHERE id = @Id
       ", new { Id = id });
 
-            if (vault == null) { throw new Exception("There was an error creating the vault"); }
+            if (vault == null) { throw new Exception("There was an error getting the vault"); }
 
             return vault;
         }
@@ -75,7 +71,7 @@ namespace keepr.Repositories
                 UPDATE vaults SET
                     name = @Name,
                     description = @Description
-                WHERE vaultId = @Id
+                WHERE id = @Id
             ", vaultData);
             if (i > 0)
             {
@@ -87,7 +83,7 @@ namespace keepr.Repositories
         public Vault DeleteVault(Vault vault)
         {
             var i = _db.Execute(@"
-                DELETE FROM vaults WHERE vaultId = @Id;
+                DELETE FROM vaults WHERE id = @Id;
             ", vault);
             if (i > 0)
             {

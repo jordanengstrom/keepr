@@ -2,9 +2,9 @@
     <div>
         <navbar></navbar>
         <h2>Welcome to your dashboard</h2>
-        <button @click="formBool = !formBool">Add a vault</button>
+        <button @click="formBool = !formBool">Add a vault form</button>
         <div v-if="formBool == true">
-            <form @submit.prevent="addVault()">
+            <form @submit.prevent="addVault(user)">
                 <div class="form-group">
                     <label for="vault-name">Vault Name</label>
                     <input v-model="newVault.name" type="text" class="form-control" id="vault-name" aria-describedby="form name" placeholder="Name your vault">
@@ -29,9 +29,20 @@
                 newVault: {}
             }
         },
+        mounted(){
+            this.$store.dispatch('authenticate')
+        },
         methods: {
-            addVault() {
-                this.$store.dispatch('addVault', this.newVault)
+            addVault(user) {
+                this.$store.dispatch('addVault', 
+                {name: this.newVault.name,
+                 description: this.newVault.description,
+                 userId: user.id})
+            }
+        },
+        computed: {
+            user() {
+                return this.$store.state.user;
             }
         },
         components: {

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace keepr.Controllers
 {
-  [Route("[controller]")]
+  [Route("api/[controller]")]
   public class VaultsController : Controller
   {
     private readonly VaultRepository _repo;
@@ -27,6 +27,12 @@ namespace keepr.Controllers
       return _repo.GetVaultById(id);
     }
 
+    [HttpGet("{userId}")]
+    public IEnumerable<Vault> GetUserVaults(string userId)
+    {
+      return _repo.GetUserVaults(userId);
+    }
+
     [HttpPost]
     public Vault AddVault([FromBody]Vault vault)
     {
@@ -34,13 +40,14 @@ namespace keepr.Controllers
       {
         // System.Console.WriteLine("ARE WE IN HERE?");
         return _repo.AddVault(vault);
+        // why not return the whole data set in order to setVaults?
       }
       return null;
     }
 
-    // [HttpGet("report/{userId}")]
-    // public IEnumerable<UserBurgerOrderReport> GetReport(string userId){
-    //   return _repo.GetUserBurgerReport(userId);
+    // [HttpGet("report/{id}")]
+    // public IEnumerable<UserBurgerOrderReport> GetReport(string id){
+    //   return _repo.GetUserBurgerReport(id);
     // }
 
   }

@@ -1,5 +1,5 @@
 -- CREATE TABLE users (
---     userId VARCHAR(255) NOT NULL,
+--     id VARCHAR(255) NOT NULL,
 --     username VARCHAR(20) NOT NULL,
 --     email VARCHAR(255) NOT NULL,
 --     password VARCHAR(255) NOT NULL,
@@ -10,7 +10,7 @@
 
 -- ADD ITEM TO DB_TABLE
 -- INSERT INTO users (
---   userId,
+--   id,
 --   username,
 --   email,
 --   password
@@ -24,10 +24,10 @@
 -- -- EDIT RECORD
 -- UPDATE users SET
 --   password = "password2200"
---   WHERE userId = "12osfd";
+--   WHERE id = "12osfd";
 
 -- REMOVE RECORD
--- DELETE FROM users WHERE userId = "13osfd";
+-- DELETE FROM users WHERE id = "13osfd";
 
 -- -- GET FROM DB_TABLE
 -- SELECT * FROM users;
