@@ -1,5 +1,5 @@
 -- CREATE TABLE users (
--- --     id int NOT NULL AUTO_INCREMENT,
+-- --  id int NOT NULL AUTO_INCREMENT,
 --     userId string VARCHAR(255) NOT NULL,
 --     username VARCHAR(20) NOT NULL,
 --     email VARCHAR(255) NOT NULL,
@@ -22,9 +22,10 @@
 
 -- CREATE TABLE keeps (
 --     id int NOT NULL AUTO_INCREMENT,
---     name VARCHAR(20) NOT NULL,
+--     img VARCHAR(255) NOT NULL,
+--     link VARCHAR(20) NOT NULL,
 --     description VARCHAR(255) NOT NULL,
---     userId int,
+--     userId VARCHAR(255) NOT NULL,
 --     INDEX userId (userId),
 --     FOREIGN KEY (userId)
 --         REFERENCES users(id)

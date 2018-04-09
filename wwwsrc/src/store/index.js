@@ -62,7 +62,7 @@ export default new vuex.Store({
                 })
         },
         getVaultById({commit, dispatch}, payload) {
-            api.get('vaults' + payload.vaultId)
+            api.get('vaults/' + payload.vaultId)
                 .then(res => {
                     console.log(res);
                     commit('setActiveVault', res.data)

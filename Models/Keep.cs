@@ -9,12 +9,13 @@ namespace keepr.Models
         [Key]
         [Required]
         public string Id { get; set; }
-
+        [Required]
+        public string Img { get; set; }
         [Required]
         public string Link { get; set; }
-
         [Required]
         public string Description { get; set; }
+        [Required]
         public int UserId { get; set; }
     }
 }

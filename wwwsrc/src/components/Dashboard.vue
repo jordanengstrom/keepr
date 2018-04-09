@@ -17,10 +17,9 @@
             </form>
         </div>
         <div class="list-group" v-for="vault in vaults">
-
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
-                    <router-link :to="{name: 'Vault'}">
+                    <router-link :to="{path: '/vault/' + vault.id }">
                         <h5 class="mb-1">{{vault.name}}</h5>
                     </router-link>
                 </div>
@@ -63,7 +62,8 @@
         },
         components: {
             Navbar
-        }
+        },
+        params: ['vault']
     }
 </script>
 
@@ -72,12 +72,11 @@
         margin-bottom: 2rem;
     }
 
-    form{
+    form {
         margin-bottom: 2rem;
     }
 
     .new-form-button {
         margin-bottom: 2rem;
     }
-
 </style>
