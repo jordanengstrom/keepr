@@ -10,16 +10,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace keepr.Controllers
 {
-  [Route("account/[controller]")]
+  [Route("[controller]")]
   public class AccountController : Controller
   {
-
     private readonly UserRepository _repo;
     public AccountController(UserRepository repo)
     {
       _repo = repo;
     }
 
+    // [HttpGet("Benny")]
+    // public String HelloWorld() {
+    //   return "HelloKitties";
+    // }
 
     [HttpPost("register")]
     public async Task<UserReturnModel> Register([FromBody] UserCreateModel userData)
@@ -35,13 +38,12 @@ namespace keepr.Controllers
       }
       catch (Exception e)
       {
-        System.Console.WriteLine(e.Message);
+        System.Console.WriteLine("e: ", e.Message);
       }
 
       return null;
     }
-
-
+  
     [HttpPost("login")]
     public async Task<UserReturnModel> Login([FromBody] UserLoginModel userData)
     {
@@ -56,10 +58,9 @@ namespace keepr.Controllers
       }
       catch (Exception e)
       {
-        System.Console.WriteLine(e.Message);
+        System.Console.WriteLine("e: ", e.Message);
       }
       return null;
-
     }
 
     [HttpDelete("logout")]

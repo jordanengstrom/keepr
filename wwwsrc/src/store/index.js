@@ -5,10 +5,15 @@ import router from '../router/index'
 
 
 // var baseUrl = production ? '//port-vue-kan-ban.herokuapp.com/' : '//localhost:3000/'
-var baseUrl = '//localhost:5000/'
+var baseUrl = 'http://localhost:5000/'
 var auth = axios.create({
     baseURL: baseUrl + 'account/',
     withCredentials: true
+    // headers: {
+    //     accept: 'application/json',
+    //     'accept-language': 'en_US',
+    //     'Content-Type': 'application/x-www-form-urlencoded'
+    // }
 });
 
 vue.use(vuex);
@@ -28,6 +33,7 @@ export default new vuex.Store({
     actions: {
         //region START AUTH ROUTES
         login({ commit, dispatch }, payload) {
+            console.log("Attempting to log in user: ", payload)
             auth.post('login', payload)
                 .then(res => {
                     console.log("LOGGED IN USER: ", res.config.data)
@@ -51,7 +57,7 @@ export default new vuex.Store({
                     })
         },
         signup({ commit, dispatch }, payload) {
-            console.log("SIGNING UP PAYLOAD: ", payload)
+            // console.log("SIGNING UP PAYLOAD: ", payload)
             auth.post('register', payload)
                 .then(res => {
                     console.log("SIGNED UP USER: ", res.config.data)

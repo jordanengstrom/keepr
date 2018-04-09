@@ -7,40 +7,40 @@ using Microsoft.AspNetCore.Mvc;
 namespace keepr.Controllers
 {
   [Route("api/[controller]")]
-  public class BurgersController : Controller
+  public class VaultsController : Controller
   {
     private readonly VaultRepository _repo;
-    public BurgersController(VaultRepository repo)
+    public VaultsController(VaultRepository repo)
     {
       _repo = repo;
     }
 
     [HttpGet]
-    public IEnumerable<Burger> Get()
+    public IEnumerable<Vault> Get()
     {
-      return _repo.GetBurgers();
+      return _repo.GetVaults();
     }
 
     [HttpGet("{id}")]
-    public Burger Get(int id)
+    public Vault Get(int id)
     {
-      return _repo.GetById(id);
+      return _repo.GetVaultById(id);
     }
 
     [HttpPost]
-    public Burger AddBurger([FromBody]Burger burger)
+    public Vault AddVault([FromBody]Vault vault)
     {
       if (ModelState.IsValid)
       {
-        return _repo.Add(burger);
+        return _repo.AddVault(vault);
       }
       return null;
     }
 
-    [HttpGet("report/{userId}")]
-    public IEnumerable<UserBurgerOrderReport> GetReport(string userId){
-      return _repo.GetUserBurgerReport(userId);
-    }
+    // [HttpGet("report/{userId}")]
+    // public IEnumerable<UserBurgerOrderReport> GetReport(string userId){
+    //   return _repo.GetUserBurgerReport(userId);
+    // }
 
   }
 }

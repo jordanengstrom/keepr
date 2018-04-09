@@ -72,7 +72,7 @@ namespace keepr.Repositories
         return new UserReturnModel()
         {
           Id = user.Id,
-          Name = user.Name,
+          Username = user.Username,
           Email = user.Email
         };
       }
@@ -90,7 +90,7 @@ namespace keepr.Repositories
       return new UserReturnModel()
       {
         Id = user.Id,
-        Name = user.Name,
+        Username = user.Username,
         Email = user.Email
       };
     }
@@ -100,7 +100,7 @@ namespace keepr.Repositories
       var i = _db.Execute(@"
                 UPDATE users SET
                     email = @Email,
-                    name = @Name
+                    username = @Username
                 WHERE id = @Id
             ", userData);
       if (i > 0)
@@ -110,7 +110,6 @@ namespace keepr.Repositories
       return null;
 
     }
-
 
     internal string ChangeUserPassword(ChangeUserPasswordModel user)
     {
