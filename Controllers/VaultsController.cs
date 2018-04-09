@@ -27,7 +27,7 @@ namespace keepr.Controllers
       return _repo.GetVaultById(id);
     }
 
-    [HttpPost("vaults")]
+    [HttpPost]
     public Vault AddVault([FromBody]Vault vault)
     {
       if (ModelState.IsValid)

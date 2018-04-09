@@ -12,7 +12,6 @@ namespace keepr.Repositories
     {
       _db = db;
     }
-
     public UserReturnModel Register(UserCreateModel userData)
     {
       //Generate an ID

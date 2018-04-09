@@ -50,11 +50,10 @@ namespace keepr
         });
       });
 
-
-
       services.AddMvc();
       services.AddTransient<IDbConnection>(x => CreateDBContext());
       services.AddTransient<UserRepository>();
+      services.AddTransient<VaultRepository>();
     }
 
     private IDbConnection CreateDBContext()
