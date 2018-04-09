@@ -20,7 +20,7 @@ namespace keepr.Controllers
     }
 
     // [HttpGet("Benny")]
-    // public String HelloWorld() {
+    // public String HelloKitties() {
     //   return "HelloKitties";
     // }
 

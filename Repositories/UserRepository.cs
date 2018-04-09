@@ -82,7 +82,7 @@ namespace keepr.Repositories
     public UserReturnModel GetUserById(string id)
     {
       User user = _db.QueryFirstOrDefault<User>(@"
-        SELECT * FROM users WHERE id = @Id
+        SELECT * FROM users WHERE userId = @Id
       ", new { Id = id });
 
       if (user == null) { throw new Exception("Oh Boy something very bad happened"); }

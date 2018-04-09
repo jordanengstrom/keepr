@@ -16,17 +16,9 @@ namespace keepr.Repositories
 
         public Vault AddVault(Vault vaultData)
         {
-            //Generate an ID
-            Guid g;
-            // Create and display the value  GUIDs.
-            g = Guid.NewGuid();
-            string id = g.ToString();
-            //   string pass = BCrypt.Net.BCrypt.HashPassword(vaultData.Password);
-
-            //construct a user
+            //construct a vault
             Vault vault = new Vault()
             {
-                Id = id,
                 Name = vaultData.Name,
                 Description = vaultData.Description,
                 UserId = vaultData.UserId
@@ -54,17 +46,17 @@ namespace keepr.Repositories
             return vault;
         }
 
-        public List<Vault> GetVaults()
-        {
-            var i = _db.Execute(@"
-                SELECT * FROM vaults
-            ");
-            if (i > 0)
-            {
-                // return List;
-            }
-            return null;
-        }
+        // public List<Vault> GetAllVaults()
+        // {
+        //     var i = _db.Execute(@"
+        //         SELECT * FROM vaults
+        //     ");
+        //     if (i > 0)
+        //     {
+        //         // return List;
+        //     }
+        //     return null;
+        // }
 
         public Vault GetVaultById(int id)
         {

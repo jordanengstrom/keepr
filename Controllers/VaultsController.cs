@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace keepr.Controllers
 {
-  [Route("api/[controller]")]
+  [Route("[controller]")]
   public class VaultsController : Controller
   {
     private readonly VaultRepository _repo;
@@ -15,11 +15,11 @@ namespace keepr.Controllers
       _repo = repo;
     }
 
-    [HttpGet]
-    public IEnumerable<Vault> Get()
-    {
-      return _repo.GetVaults();
-    }
+    // [HttpGet]
+    // public IEnumerable<Vault> GetAllVaults()
+    // {
+    //   return _repo.GetAllVaults();
+    // }
 
     [HttpGet("{id}")]
     public Vault Get(int id)
@@ -27,11 +27,12 @@ namespace keepr.Controllers
       return _repo.GetVaultById(id);
     }
 
-    [HttpPost]
+    [HttpPost("vaults")]
     public Vault AddVault([FromBody]Vault vault)
     {
       if (ModelState.IsValid)
       {
+        // System.Console.WriteLine("ARE WE IN HERE?");
         return _repo.AddVault(vault);
       }
       return null;

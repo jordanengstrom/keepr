@@ -32,7 +32,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .logout-btn {
         margin-right: 1rem;
     }

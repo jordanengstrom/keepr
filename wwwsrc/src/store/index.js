@@ -16,6 +16,11 @@ var auth = axios.create({
     // }
 });
 
+var api = axios.create({
+    baseURL: baseUrl + 'api/',
+    withCredentials: true
+});
+
 vue.use(vuex);
 
 export default new vuex.Store({
@@ -26,17 +31,29 @@ export default new vuex.Store({
         loginUser(state, payload) {
             state.user = payload
         },
-        clearData(state, payload){
+        clearData(state, payload) {
             state.user = {}
         }
     },
     actions: {
+        addVault({ commit, dispatch }, payload) {
+            console.log("ADDVAULT PAYLOAD: ", payload);
+            api.post('vaults', payload)
+                .then(res => {
+                    console.log("RES.DATA: ", res.data)
+                    commit('setVaults', res.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        },
+
         //region START AUTH ROUTES
         login({ commit, dispatch }, payload) {
-            console.log("Attempting to log in user: ", payload)
+            // console.log("Attempting to log in user: ", payload)
             auth.post('login', payload)
                 .then(res => {
-                    console.log("LOGGED IN USER: ", res.config.data)
+                    // console.log("LOGGED IN USER: ", res.config.data)
                     commit('loginUser', res.data)
                     router.push({ name: 'Home' })
                 })
@@ -46,21 +63,21 @@ export default new vuex.Store({
                 })
         },
         authenticate({ commit, dispatch }) {
-                auth.get('authenticate')
-                    .then(res => {
-                        console.log(res)
-                        commit('loginUser', res.config.data)
-                    })
-                    .catch(err => {
-                        console.log(err)
-                        router.push({ name: 'Login' })
-                    })
+            auth.get('authenticate')
+                .then(res => {
+                    console.log(res)
+                    commit('loginUser', res.config.data)
+                })
+                .catch(err => {
+                    console.log(err)
+                    router.push({ name: 'Login' })
+                })
         },
         signup({ commit, dispatch }, payload) {
             // console.log("SIGNING UP PAYLOAD: ", payload)
             auth.post('register', payload)
                 .then(res => {
-                    console.log("SIGNED UP USER: ", res.config.data)
+                    // console.log("SIGNED UP USER: ", res.config.data)
                     commit('loginUser', res.config.data)
                     router.push({ name: 'Home' })
                 })
@@ -74,7 +91,7 @@ export default new vuex.Store({
                     console.log(res);
                     commit('loginUser', {})
                     commit('clearData')
-                    router.push({name: 'Login'})
+                    router.push({ name: 'Login' })
                 })
         }
         //endregion END AUTH ACTIONS

@@ -26,9 +26,9 @@
                     }
                 }
             },
-            // mounted() {
-            //     this.$store.dispatch('authenticate');
-            // },
+            mounted() {
+                this.$store.dispatch('authenticate');
+            },
             methods: {
                 searchByEmail() {
                     this.$store.dispatch('searchByEmail', this.userEmail);

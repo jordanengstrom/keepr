@@ -30,7 +30,7 @@
                         <form @submit.prevent="createSignup()">
                             <div class="form-group">
                                 <label>Username</label>
-                                <input v-model="signupUser.name" class="form-control" type="text" placeholder="Name" required>
+                                <input v-model="signupUser.username" class="form-control" type="text" placeholder="Username" required>
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
