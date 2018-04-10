@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using keepr.Models;
 using Dapper;
+using System.Collections.Generic;
 
 namespace keepr.Repositories
 {
@@ -15,17 +16,11 @@ namespace keepr.Repositories
 
         public Keep AddKeep(Keep keepData)
         {
-            //Generate an ID
-            Guid g;
-            // Create and display the value  GUIDs.
-            g = Guid.NewGuid();
-            string id = g.ToString();
-            //   string pass = BCrypt.Net.BCrypt.HashPassword(vaultData.Password);
-
             //construct a keep
             Keep keep = new Keep()
             {
-                Id = id,
+                Id = keepData.Id,
+                Img = keepData.Img,
                 Link = keepData.Link,
                 Description = keepData.Description,
                 UserId = keepData.UserId
@@ -34,12 +29,14 @@ namespace keepr.Repositories
             // run a sql command
             var success = _db.Execute(@"
         INSERT INTO keeps(
-          keepId,
+          id,
+          img,
           link, 
           description,
           userId
         ) VALUES(
           @Id,
+          @Img,
           @Link,
           @Description,
           @UserId
@@ -47,16 +44,17 @@ namespace keepr.Repositories
       ", keep);
             if (success < 1)
             {
-                throw new Exception("EMAIL IN USE");
+                throw new Exception("Unable to create keep");
             }
-            // return created vault
+            // return created keep
             return keep;
         }
 
-        public Keep GetKeepById(string id)
+        //Find one
+        public Keep GetKeepById(int id)
         {
             Keep keep = _db.QueryFirstOrDefault<Keep>(@"
-        SELECT * FROM keeps WHERE keepId = @Id
+        SELECT * FROM keeps WHERE id = @Id
       ", new { Id = id });
 
             if (keep == null) { throw new Exception("There was an error getting the keep"); }
@@ -64,13 +62,24 @@ namespace keepr.Repositories
             return keep;
         }
 
+        //Find many
+        public IEnumerable<Keep> GetUserKeeps(string userId)
+        {
+            return _db.Query<Keep>(@"
+                SELECT * FROM keeps WHERE userId = @UserId
+            ", new {UserId = userId});
+        }
+
         public Keep UpdateKeep(Keep keep, Keep keepData)
         {
             var i = _db.Execute(@"
                 UPDATE keeps SET
+                    id = @Id,
+                    img = @Img,
                     link = @Link,
-                    description = @Description
-                WHERE keepId = @Id
+                    description = @Description,
+                    userId = @UserId
+                WHERE id = @Id
             ", keepData);
             if (i > 0)
             {
@@ -82,7 +91,7 @@ namespace keepr.Repositories
         public Keep DeleteKeep(Keep keep)
         {
             var i = _db.Execute(@"
-                DELETE FROM keeps WHERE keepId = @Id;
+                DELETE FROM keeps WHERE id = @Id;
             ", keep);
             if (i > 0)
             {

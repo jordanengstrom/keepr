@@ -21,6 +21,7 @@ namespace keepr.Controllers
         //   return _repo.GetAllVaults();
         // }
 
+        //Find one
         [HttpGet("{id}")]
         public Vault GetVaultById(int id)
         {
@@ -33,7 +34,6 @@ namespace keepr.Controllers
             if (ModelState.IsValid)
             {
                 return _repo.AddVault(vault);
-                // why not return the whole data set in order to setVaults?
             }
             return null;
         }

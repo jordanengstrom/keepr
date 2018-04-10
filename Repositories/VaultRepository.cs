@@ -45,14 +45,7 @@ namespace keepr.Repositories
             // return created vault
             return vault;
         }
-
-        public IEnumerable<Vault> GetUserVaults(string userId)
-        {
-            return _db.Query<Vault>(@"
-                SELECT * FROM vaults WHERE userId = @UserId
-            ", new {UserId = userId});
-        }
-
+        //Find one
         public Vault GetVaultById(int id)
         {
             Vault vault = _db.QueryFirstOrDefault<Vault>(@"
@@ -63,7 +56,13 @@ namespace keepr.Repositories
 
             return vault;
         }
-
+        //Find many
+        public IEnumerable<Vault> GetUserVaults(string userId)
+        {
+            return _db.Query<Vault>(@"
+                SELECT * FROM vaults WHERE userId = @UserId
+            ", new {UserId = userId});
+        }
         public Vault UpdateVault(Vault vault, Vault vaultData)
         {
             var i = _db.Execute(@"

@@ -15,9 +15,9 @@
                     <input v-model="newKeep.link" type="text" class="form-control" id="keep-description" placeholder="Link to content">
                 </div>
                 <div class="form-group">
-                        <label for="keep-description">keep description</label>
-                        <input v-model="newKeep.description" type="text" class="form-control" id="keep-description" placeholder="Blog about the keep">
-                    </div>
+                    <label for="keep-description">keep description</label>
+                    <input v-model="newKeep.description" type="text" class="form-control" id="keep-description" placeholder="Blog about the keep">
+                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
@@ -40,11 +40,17 @@
         },
         mounted() {
             this.$store.dispatch('authenticate');
-            this.$store.dispatch('getVaultById', {vaultId: this.$route.params.vaultId})
+            this.$store.dispatch('getVaultById', { vaultId: this.$route.params.vaultId })
         },
         methods: {
             addKeep(user) {
-                
+                this.$store.dispatch('addKeep',
+                    {
+                        img: this.newKeep.img,
+                        link: this.newKeep.link,
+                        description: this.newKeep.description,
+                        userId: user.id
+                    })
             }
         },
         computed: {

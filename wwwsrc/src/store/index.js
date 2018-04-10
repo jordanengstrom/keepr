@@ -44,6 +44,17 @@ export default new vuex.Store({
         }
     },
     actions: {
+        //region KEEPS
+        addKeep({commit, dispatch}, payload) {
+            console.log("INCOMING KEEP: ", payload)
+            api.post('keeps', payload)
+                .then(res => {
+                    console.log("RES.DATA: ", res.data)
+                    // dispatch('getVaultKeeps', res.data);
+                })
+        },
+
+        //region VAULTS
         addVault({ commit, dispatch }, payload) {
             api.post('vaults', payload)
                 .then(res => {
@@ -68,6 +79,8 @@ export default new vuex.Store({
                     commit('setActiveVault', res.data)
                 })
         },
+        // endregion VAULTS
+
         //region START AUTH ROUTES
         login({ commit, dispatch }, payload) {
             // console.log("Attempting to log in user: ", payload)

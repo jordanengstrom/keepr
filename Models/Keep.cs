@@ -8,7 +8,7 @@ namespace keepr.Models
     {
         [Key]
         [Required]
-        public string Id { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Img { get; set; }
         [Required]
@@ -16,6 +16,6 @@ namespace keepr.Models
         [Required]
         public string Description { get; set; }
         [Required]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

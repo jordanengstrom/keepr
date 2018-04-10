@@ -1,13 +1,14 @@
 -- CREATE TABLE keeps (
---     keepId int NOT NULL AUTO_INCREMENT,
---     name VARCHAR(20) NOT NULL,
+--     id int NOT NULL AUTO_INCREMENT,
+--     img VARCHAR(255) NOT NULL,
+--     link VARCHAR(255) NOT NULL,
 --     description VARCHAR(255) NOT NULL,
 --     userId VARCHAR(255),
 --     INDEX userId (userId),
 --     FOREIGN KEY (userId)
---         REFERENCES users(userId)
+--         REFERENCES users(id)
 --         ON DELETE CASCADE,  
---     PRIMARY KEY (keepId)
+--     PRIMARY KEY (id)
 -- );
 
 -- ALTER TABLE keeps

@@ -23,9 +23,9 @@
 -- CREATE TABLE keeps (
 --     id int NOT NULL AUTO_INCREMENT,
 --     img VARCHAR(255) NOT NULL,
---     link VARCHAR(20) NOT NULL,
+--     link VARCHAR(255) NOT NULL,
 --     description VARCHAR(255) NOT NULL,
---     userId VARCHAR(255) NOT NULL,
+--     userId VARCHAR(255),
 --     INDEX userId (userId),
 --     FOREIGN KEY (userId)
 --         REFERENCES users(id)
