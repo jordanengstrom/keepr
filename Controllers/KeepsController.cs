@@ -46,6 +46,12 @@ namespace keepr.Controllers
             return _repo.GetUserKeeps(userId);
         }
 
+        // [HttpGet("report/{vaultId}")]
+        // public IEnumerable<Keep> GetVaultKeeps(int vaultId)
+        // {
+        //     return _repo.GetVaultKeeps(vaultId);
+        // }
+
         // Come back to this:   
         [HttpPut("{id}")]
         public Keep UpdateKeep([FromBody]Keep keepData)

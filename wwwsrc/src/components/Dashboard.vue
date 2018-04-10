@@ -22,6 +22,28 @@
                     <router-link :to="{path: '/vault/' + vault.id }">
                         <h5 class="mb-1">{{vault.name}}</h5>
                     </router-link>
+                    <div v-if="updatedFormBool == true  && vaultId == vault.id">
+                        <form @submit.prevent="updateVault(user, vault)">
+                            <div class="form-group">
+                                <label for="vault-name">Update vault Name</label>
+                                <input v-model="updatedVault.name" type="text" class="form-control" id="vault-name" aria-describedby="form name" placeholder="Name your vault">
+                            </div>
+                            <div class="form-group">
+                                <label for="vault-description">Update vault Description</label>
+                                <input v-model="updatedVault.description" type="text" class="form-control" id="vault-description" placeholder="What goes in this vault?">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                    <i data-toggle="dropdown" class="fas fa-ellipsis-v"></i>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item">
+                            <button @click="deleteVault(user, vault)">delete</button>
+                        </div>
+                        <div class="dropdown-item">
+                            <button @click="updatedFormBool = !updatedFormBool, vaultId = vault.id">update</button>
+                        </div>
+                    </div>
                 </div>
                 <p class="mb-1">{{vault.description}}</p>
             </a>
@@ -36,7 +58,10 @@
         data() {
             return {
                 formBool: false,
-                newVault: {}
+                updatedFormBool: false,
+                newVault: {},
+                updatedVault: {},
+                vaultId: '',
             }
         },
         mounted() {
@@ -50,7 +75,26 @@
                         description: this.newVault.description,
                         userId: user.id
                     })
+                this.formBool = false;
+            },
+            deleteVault(user, vault) {
+                this.$store.dispatch('deleteVault',
+                    {
+                        vaultId: vault.id,
+                        userId: user.id
+                    })
+            },
+            updateVault(user, vault) {
+                this.$store.dispatch('updateVault',
+                    {
+                        id: vault.id,
+                        name: this.updatedVault.name,
+                        description: this.updatedVault.description,
+                        userId: user.id
+                    })
+                this.updatedFormBool = false;
             }
+
         },
         computed: {
             user() {
@@ -70,6 +114,15 @@
 <style scoped>
     .list-group-item {
         margin-bottom: 2rem;
+    }
+
+    a:hover {
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    a:-webkit-any-link {
+        cursor: default !important;
     }
 
     form {

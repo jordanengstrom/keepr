@@ -35,12 +35,17 @@
         data() {
             return {
                 newKeep: {},
-                formBool: false
+                formBool: false,
+                user: this.$store.state.user
             }
         },
         mounted() {
             this.$store.dispatch('authenticate');
             this.$store.dispatch('getVaultById', { vaultId: this.$route.params.vaultId })
+            this.$store.dispatch('getUserKeeps', 
+                {   userId: this.user.userId,
+                    vaultId: this.$route.params.vaultId
+                })
         },
         methods: {
             addKeep(user) {
@@ -56,10 +61,10 @@
         computed: {
             vault() {
                 return this.$store.state.activeVault
-            },
-            user() {
-                return this.$store.state.user
             }
+            // user() {
+            //     return this.$store.state.user
+            // }
         },
         components: {
             Navbar

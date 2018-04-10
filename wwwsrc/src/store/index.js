@@ -27,10 +27,14 @@ export default new vuex.Store({
     state: {
         user: {},
         vaults: [],
+        keeps: [],
         activeVault: {}
     },
     mutations: {
-        setVaults(state,payload) {
+        setKeeps(state, payload) {
+            state.keeps = payload
+        },
+        setVaults(state, payload) {
             state.vaults = payload
         },
         setActiveVault(state, payload) {
@@ -45,12 +49,26 @@ export default new vuex.Store({
     },
     actions: {
         //region KEEPS
-        addKeep({commit, dispatch}, payload) {
+        addKeep({ commit, dispatch }, payload) {
             console.log("INCOMING KEEP: ", payload)
             api.post('keeps', payload)
                 .then(res => {
-                    console.log("RES.DATA: ", res.data)
+                    console.log("RES: ", res)
                     // dispatch('getVaultKeeps', res.data);
+                })
+        },
+        // getVaultKeeps({commit, dispatch}, payload) {
+        //     api.get('keeps/' + payload.vaultId)
+        //         .then(res => {
+        //             console.log("USER KEEPS: ", res);
+        //             // commit('setKeeps', res.data)
+        //         })
+        // },
+        getUserKeeps({ commit, dispatch }, payload) {
+            api.get('keeps/report/' + payload.userId)
+                .then(res => {
+                    console.log("RES.DATA: ", res.data)
+                    commit('setKeeps', res.data)
                 })
         },
 
@@ -58,25 +76,39 @@ export default new vuex.Store({
         addVault({ commit, dispatch }, payload) {
             api.post('vaults', payload)
                 .then(res => {
-                    console.log("RES: ", res)
+                    // console.log("RES.DATA: ", res.data)
                     dispatch('getUserVaults', res.data);
                 })
                 .catch(err => {
                     console.log(err);
                 })
         },
-        getUserVaults({commit, dispatch}, payload) {
-            api.get('vaults/report/'+ payload.userId)
+        getUserVaults({ commit, dispatch }, payload) {
+            api.get('vaults/report/' + payload.userId)
                 .then(res => {
-                    console.log("USER VAULTS: ", res.data)
+                    // console.log("USER VAULTS: ", res.data)
                     commit('setVaults', res.data)
                 })
         },
-        getVaultById({commit, dispatch}, payload) {
+        getVaultById({ commit, dispatch }, payload) {
             api.get('vaults/' + payload.vaultId)
                 .then(res => {
-                    console.log(res);
+                    // console.log(res);
                     commit('setActiveVault', res.data)
+                })
+        },
+        deleteVault({ commit, dispatch }, payload) {
+            api.delete('vaults/' + payload.vaultId)
+                .then(res => {
+                    dispatch('getUserVaults', payload)
+                })
+        },
+        updateVault({commit, dispatch}, payload) {
+            console.log("UPDATED VAULT PAYLOAD: ", payload)
+            api.put('vaults/' + payload.id, payload)
+                .then(res => {
+                    console.log ("RES: ", res)
+                    dispatch('getUserVaults', payload);
                 })
         },
         // endregion VAULTS

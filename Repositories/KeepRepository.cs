@@ -69,6 +69,12 @@ namespace keepr.Repositories
                 SELECT * FROM keeps WHERE userId = @UserId
             ", new {UserId = userId});
         }
+        // public IEnumerable<Keep> GetVaultKeeps(int vaultId)
+        // {
+        //     return _db.Query<Keep>(@"
+        //         SELECT * FROM keeps WHERE vaultId = @VaultId
+        //     ", new {VaultId = vaultId});
+        // }
 
         public Keep UpdateKeep(Keep keep, Keep keepData)
         {
