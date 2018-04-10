@@ -76,6 +76,13 @@ namespace keepr.Repositories
         //     ", new {VaultId = vaultId});
         // }
 
+        //Find all
+        public IEnumerable<Keep> GetAllKeeps()
+        {
+            return _db.Query<Keep>(@"
+                SELECT * FROM keeps
+            ");
+        }
         public Keep UpdateKeep(Keep keep, Keep keepData)
         {
             var i = _db.Execute(@"

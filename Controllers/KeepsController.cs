@@ -14,14 +14,6 @@ namespace keepr.Controllers
         {
             _repo = repo;
         }
-
-        // Come back to this:
-        // [HttpGet]
-        // public IEnumerable<Vault> GetAllKeeps()
-        // {
-        //   return _repo.GetAllKeeps();
-        // }
-
         //Find one
         [HttpGet("{id}")]
         public Keep GetKeepById(int id)
@@ -44,6 +36,13 @@ namespace keepr.Controllers
         public IEnumerable<Keep> GetUserKeeps(string userId)
         {
             return _repo.GetUserKeeps(userId);
+        }
+
+        //Find all
+        [HttpGet]
+        public IEnumerable<Keep> GetAllKeeps()
+        {
+          return _repo.GetAllKeeps();
         }
 
         // [HttpGet("report/{vaultId}")]

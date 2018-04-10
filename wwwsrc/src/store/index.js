@@ -28,6 +28,7 @@ export default new vuex.Store({
         user: {},
         vaults: [],
         keeps: [],
+        results: [],
         activeVault: {}
     },
     mutations: {
@@ -49,6 +50,13 @@ export default new vuex.Store({
     },
     actions: {
         //region KEEPS
+        getAllKeeps({commit, dispatch}, payload) {
+            api.get('keeps')
+                .then(res => {
+                    // console.log("KEEPS RES.DATA: ", res.data)
+                    commit('setKeeps', res.data)
+                })
+        },
         addKeep({ commit, dispatch }, payload) {
             console.log("INCOMING KEEP: ", payload)
             api.post('keeps', payload)
@@ -56,6 +64,10 @@ export default new vuex.Store({
                     console.log("RES: ", res)
                     // dispatch('getVaultKeeps', res.data);
                 })
+        },
+        addToVault({commit, dispatch}, payload) {
+            console.log("KEPT PAYLOAD: ", payload)
+                // api.post('vaultkeeps/')
         },
         // getVaultKeeps({commit, dispatch}, payload) {
         //     api.get('keeps/' + payload.vaultId)
@@ -67,8 +79,24 @@ export default new vuex.Store({
         getUserKeeps({ commit, dispatch }, payload) {
             api.get('keeps/report/' + payload.userId)
                 .then(res => {
-                    console.log("RES.DATA: ", res.data)
+                    // console.log("RES.DATA: ", res.data)
                     commit('setKeeps', res.data)
+                })
+        },
+        searchKeeps({commit, dispatch}, payload) {
+            var searchTerm = payload.query.toLowerCase();
+            api.get('keeps')
+                .then(res => {
+                    var arr = res.data
+                    var out = []
+                    for (var i = 0; i < arr.length; i++) {
+                        var keepElem = arr[i]
+                        if(keepElem.description.toLowerCase().includes(searchTerm)){
+                            out.push(keepElem)
+                        }
+                    }
+                    // console.log("OUT: ", out);
+                    commit('setKeeps', out);
                 })
         },
 
@@ -133,7 +161,8 @@ export default new vuex.Store({
                     // console.log("AUTH RES.DATA", res.data)
                     commit('loginUser', res.data)
                     res.data["userId"] = res.data.id
-                    dispatch('getUserVaults', res.data)
+                    var dispatchedPayload = res.data
+                    dispatch('getUserVaults', dispatchedPayload)
                 })
                 .catch(err => {
                     console.log(err)
