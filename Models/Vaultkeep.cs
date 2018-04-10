@@ -4,20 +4,16 @@ using System.Security.Claims;
 
 namespace keepr.Models
 {
-    public class Keep
+    public class Vaultkeep
     {
         [Key]
         [Required]
         public int Id { get; set; }
         [Required]
-        public string Img { get; set; }
+        public int VaultId { get; set; }
         [Required]
-        public string Link { get; set; }
-        [Required]
-        public string Description { get; set; }
+        public int KeepId { get; set; }
         [Required]
         public string UserId { get; set; }
-        [Required]
-        public int Views { get; set; }
     }
 }

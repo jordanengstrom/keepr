@@ -33,13 +33,15 @@ namespace keepr.Repositories
           img,
           link, 
           description,
-          userId
+          userId,
+          views
         ) VALUES(
           @Id,
           @Img,
           @Link,
           @Description,
-          @UserId
+          @UserId,
+          @Views
         )
       ", keep);
             if (success < 1)

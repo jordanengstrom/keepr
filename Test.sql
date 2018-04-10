@@ -1,10 +1,9 @@
 -- CREATE TABLE users (
--- --  id int NOT NULL AUTO_INCREMENT,
---     userId string VARCHAR(255) NOT NULL,
+--     id VARCHAR(255) NOT NULL,
 --     username VARCHAR(20) NOT NULL,
 --     email VARCHAR(255) NOT NULL,
 --     password VARCHAR(255) NOT NULL,
---     PRIMARY KEY (userId),
+--     PRIMARY KEY (id),
 --     UNIQUE KEY email (email)
 -- );
 
@@ -61,3 +60,10 @@
 -- SELECT * FROM vaultkeeps vk
 -- INNER JOIN keeps k ON k.id = vk.keepId 
 -- WHERE (vaultId = 2)
+
+
+-- To start over, drop tables in this order:
+-- DROP TABLE vaultkeeps
+-- DROP TABLE vaults
+-- DROP TABLE keeps
+-- DROP TABLE users
