@@ -5,7 +5,7 @@
         <h3>{{vault.description}}</h3>
         <button @click="formBool = !formBool" class="new-form-button">Add keep form</button>
         <div v-if="formBool == true">
-            <form @submit.prevent="addKeep(user)">
+            <form @submit.prevent="addKeep(vault)">
                 <div class="form-group">
                     <label for="keep-name">Keep Image Link</label>
                     <input v-model="newKeep.img" type="text" class="form-control" id="keep-img" aria-describedby="form name" placeholder="Link to image of content">
@@ -48,12 +48,23 @@
                 })
         },
         methods: {
-            addKeep(user) {
+            addKeep(vault) {
                 this.$store.dispatch('addKeep',
                     {
                         img: this.newKeep.img,
                         link: this.newKeep.link,
                         description: this.newKeep.description,
+                        userId: vault.userId,
+                        vaultId: vault.id
+                    })
+            },
+            addToVault(vault, keep, user){
+                // console.log("Vault: ", vault)
+                // console.log("Keep: ", keep)
+                // console.log("User: ", user)
+                this.$store.dispatch('addToVault', 
+                    {   vaultId: vault.id,
+                        keepId: keep.id,
                         userId: user.id
                     })
             }
@@ -62,9 +73,6 @@
             vault() {
                 return this.$store.state.activeVault
             }
-            // user() {
-            //     return this.$store.state.user
-            // }
         },
         components: {
             Navbar

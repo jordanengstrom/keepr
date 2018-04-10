@@ -14,43 +14,57 @@ namespace keepr.Repositories
             _db = db;
         }
 
-        public Keep AddKeep(Keep keepData)
+        public Keep AddKeep(Keep keep)
         {
-            //construct a keep
-            Keep keep = new Keep()
-            {
-                Id = keepData.Id,
-                Img = keepData.Img,
-                Link = keepData.Link,
-                Description = keepData.Description,
-                UserId = keepData.UserId
-            };
-
-            // run a sql command
-            var success = _db.Execute(@"
-        INSERT INTO keeps(
-          id,
-          img,
-          link, 
-          description,
-          userId,
-          views
-        ) VALUES(
-          @Id,
-          @Img,
-          @Link,
-          @Description,
-          @UserId,
-          @Views
-        )
-      ", keep);
-            if (success < 1)
-            {
-                throw new Exception("Unable to create keep");
-            }
-            // return created keep
+            int id = _db.ExecuteScalar<int>(@"
+            INSERT INTO keeps (
+                img,
+                link,
+                description,
+                userId,
+                views
+            ) VALUES (
+                @Img,
+                @Link,
+                @Description,
+                @UserId,
+                @Views
+            ); SELECT LAST_INSERT_ID()", keep);
+            keep.Id = id;
             return keep;
         }
+            // construct a keep
+    //         Keep keep = new Keep()
+    //         {
+    //             Img = keepData.Img,
+    //             Link = keepData.Link,
+    //             Description = keepData.Description,
+    //             UserId = keepData.UserId
+    //         };
+
+    //         // run a sql command
+    //         var success = _db.Execute(@"
+    //     INSERT INTO keeps(
+    //       img,
+    //       link, 
+    //       description,
+    //       userId,
+    //       views
+    //     ) VALUES(
+    //       @Img,
+    //       @Link,
+    //       @Description,
+    //       @UserId,
+    //       @Views
+    //     )
+    //   ", keep);
+    //         if (success < 1)
+    //         {
+    //             throw new Exception("Unable to create keep");
+    //         }
+    //         // return created keep
+    //         return keep;
+    // }
 
         //Find one
         public Keep GetKeepById(int id)

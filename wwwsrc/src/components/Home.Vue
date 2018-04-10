@@ -33,7 +33,7 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <div class="dropdown-item" v-for="vault in vaults">
-                                        <p @click="addToVault(keep, vault)">
+                                        <p @click="addToVault(vault, keep, user)">
                                             {{vault.name}}
                                         </p>
                                     </div>
@@ -72,15 +72,14 @@
             // this.resultsBool = false
         },
         methods: {
-            followUser(user, userToAdd) {
-                this.$store.dispatch('followUser', { user: user, userToAdd: userToAdd })
-            },
-            addToVault(keep, vault){
-                console.log("Keep: ", keep)
-                console.log("Vault: ", vault)
+            addToVault(vault, keep, user){
+                // console.log("Vault: ", vault)
+                // console.log("Keep: ", keep)
+                // console.log("User: ", user)
                 this.$store.dispatch('addToVault', 
-                    {   keep: keep,
-                        vault: vault
+                    {   vaultId: vault.id,
+                        keepId: keep.id,
+                        userId: user.id
                     })
             },
             searchKeeps() {

@@ -50,6 +50,19 @@ export default new vuex.Store({
     },
     actions: {
         //region KEEPS
+        getKeepById({commit, dispatch}, payload) {
+            api.get('/keeps/' + payload.keepId)
+                .then(res =>{
+                    console.log(res)
+                    // var dispatchedPayload =
+                    // {
+                    //     vaultId: payload.vaultId,
+                    //     keepId: res.data.id,
+                    //     userId: payload.userId,
+                    // }
+                    // dispatch('addToVault', dispatchedPayload)
+                })
+        },
         getAllKeeps({commit, dispatch}, payload) {
             api.get('keeps')
                 .then(res => {
@@ -58,16 +71,25 @@ export default new vuex.Store({
                 })
         },
         addKeep({ commit, dispatch }, payload) {
-            console.log("INCOMING KEEP: ", payload)
+            console.log("INCOMING KEEP PAYLOAD: ", payload)
             api.post('keeps', payload)
                 .then(res => {
-                    console.log("RES: ", res)
-                    // dispatch('getVaultKeeps', res.data);
+                    console.log("RES.DATA", res.data)
+                    var dispatchedPayload = 
+                    {
+                        vaultId: payload.vaultId,
+                        keepId: res.data.id,
+                        userId: payload.userId,
+                    }
+                    dispatch('addToVault', dispatchedPayload);
                 })
         },
         addToVault({commit, dispatch}, payload) {
-            console.log("KEPT PAYLOAD: ", payload)
-                // api.post('vaultkeeps/')
+            console.log("addToVault Payload: ", payload)
+                api.post('vaultkeeps', payload)
+                    .then(res => {
+                        console.log("RES.DATA: ", res.data)
+                    })
         },
         // getVaultKeeps({commit, dispatch}, payload) {
         //     api.get('keeps/' + payload.vaultId)
