@@ -67,6 +67,9 @@
                 signupUser: {}
             }
         },
+        mounted () {
+            this.$store.dispatch('clearActiveKeeps')
+        },
         methods: {
             login() {
                 // console.log("LOGGING IN: ", this.loginUser)

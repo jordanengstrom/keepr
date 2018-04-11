@@ -30,9 +30,16 @@ export default new vuex.Store({
         vaults: [],
         keeps: [],
         results: [],
-        activeVault: {}
+        activeVault: {},
+        activeKeeps: []
     },
     mutations: {
+        clearActiveKeeps(state, payload) {
+            state.activeKeeps = []
+        },
+        setActiveKeeps(state, payload) {
+            state.activeKeeps.push(payload)
+        },
         setVaultKeeps(state, payload) {
             state.vaultkeeps = payload
         },
@@ -54,11 +61,21 @@ export default new vuex.Store({
     },
     actions: {
         //region KEEPS
+        clearActiveKeeps({ commit, dispatch }) {
+            commit('clearActiveKeeps')
+        },
+        getActiveKeeps({ commit, dispatch }, payload) {
+            console.log("GET AK PAYLOAD: ", payload)
+            for (var i = 0; i < payload.vaultkeeps.length; i++) {
+                var keepId = payload.vaultkeeps[i].keepId
+                dispatch('getKeepById', { keepId: keepId })
+            }
+        },
         getKeepById({ commit, dispatch }, payload) {
-            console.log("GETKEEPBYID: ", payload)
+            // console.log("GETKEEPBYID: ", payload)
             api.get('/keeps/' + payload.keepId)
                 .then(res => {
-                    console.log(res)
+                    commit('setActiveKeeps', res.data)
                 })
         },
         getAllKeeps({ commit, dispatch }, payload) {
@@ -67,7 +84,8 @@ export default new vuex.Store({
                     var out = []
                     for (var i = 0; i < res.data.length; i++) {
                         var keepElem = res.data[i]
-                        if(keepElem.public){
+                        console.log("RES.DATA: ", res.data)
+                        if (keepElem.public) {
                             out.push(keepElem)
                         }
                     }
@@ -96,10 +114,10 @@ export default new vuex.Store({
                     console.log("RES.DATA: ", res.data)
                 })
         },
-        getVaultKeeps({commit, dispatch}, payload) {
-            api.get('keeps/report/' + payload.vaultId)
+        getVaultKeeps({ commit, dispatch }, payload) {
+            api.get('vaultkeeps/report/' + payload.vaultId)
                 .then(res => {
-                    console.log("VAULT KEEPS: ", res.data);
+                    // console.log("VAULT KEEPS: ", res.data);
                     commit('setVaultKeeps', res.data)
                 })
         },
@@ -118,7 +136,7 @@ export default new vuex.Store({
                     var out = []
                     for (var i = 0; i < arr.length; i++) {
                         var keepElem = arr[i]
-                        if (keepElem.description.toLowerCase().includes(searchTerm)) {
+                        if (keepElem.description.toLowerCase().includes(searchTerm) && (keepElem.public == true)) {
                             out.push(keepElem)
                         }
                     }

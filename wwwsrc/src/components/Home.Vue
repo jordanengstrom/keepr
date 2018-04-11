@@ -25,6 +25,8 @@
                         <div class="card-body">
                             <!-- <h5 class="card-title">Card title</h5> -->
                             <p class="card-text">{{keep.description}}</p>
+                            <p class="card-text">Views: {{keep.views}}</p>
+                            <p class="card-text">Keeps: {{keep.views}}</p>
                             <a :href="`${keep.link}`" @click="updateViews(keep)" class="btn btn-primary">go</a>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
@@ -69,13 +71,9 @@
         mounted() {
             this.$store.dispatch('authenticate')
             this.$store.dispatch('getAllKeeps')
-            // this.resultsBool = false
         },
         methods: {
             addToVault(vault, keep, user){
-                // console.log("Vault: ", vault)
-                // console.log("Keep: ", keep)
-                // console.log("User: ", user)
                 this.$store.dispatch('addToVault', 
                     {   vaultId: vault.id,
                         keepId: keep.id,
@@ -152,7 +150,6 @@
         margin-left: 1rem;
         margin-right: 1rem;
         margin-top: 1rem;
-
     }
 
     /* .card-img-top {

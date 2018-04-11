@@ -65,6 +65,7 @@
             }
         },
         mounted() {
+            // this.$store.dispatch('clearActiveKeeps')
             this.$store.dispatch('authenticate')
         },
         methods: {
