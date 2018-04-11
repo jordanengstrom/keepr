@@ -64,6 +64,12 @@ namespace keepr.Repositories
                 WHERE (vaultId = @VaultId)
             ", new { VaultId = vaultId });
         }
+        public int KeepCount(int keepId)
+        {
+            return _db.Execute(@"
+                SELECT COUNT(keepId) FROM vaultkeeps WHERE (keepId = @KeepId)
+            ");
+        }
         public Vaultkeep UpdateVaultkeep(Vaultkeep vaultkeep, Vaultkeep vaultkeepData)
         {
             var i = _db.Execute(@"

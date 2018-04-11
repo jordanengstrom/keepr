@@ -34,7 +34,7 @@
                         <p class="card-text">{{activeKeep.description}}</p>
                         <p class="card-text">Views: {{activeKeep.views}}</p>
                         <p class="card-text">Keeps: {{activeKeep.views}}</p>
-                        <a :href="`${activeKeep.link}`" @click="updateViews(keep)" class="btn btn-primary">go</a>
+                        <a :href="`${activeKeep.link}`" @click="updateViews(activeKeep)" class="btn btn-primary">go</a>
                         <div class="dropdown">
                             <!-- <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
@@ -95,6 +95,10 @@
                         vaultId: vault.id,
                         public: this.newKeep.public
                     })
+            },
+            updateViews(keep) {
+                console.log(keep)
+                this.$store.dispatch('updateViews', {keep: keep})
             }
         },
         computed: {

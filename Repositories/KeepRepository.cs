@@ -23,6 +23,7 @@ namespace keepr.Repositories
                 description,
                 userId,
                 views,
+                keeps,
                 public
             ) VALUES (
                 @Img,
@@ -30,6 +31,7 @@ namespace keepr.Repositories
                 @Description,
                 @UserId,
                 @Views,
+                @Keeps,
                 @Public
             ); SELECT LAST_INSERT_ID()", keep);
             keep.Id = id;
@@ -77,9 +79,10 @@ namespace keepr.Repositories
                     link = @Link,
                     description = @Description,
                     userId = @UserId,
-                    public = @Public,
-                    views = @Views + 1
-                WHERE id = @Id
+                    views = @Views + 1,
+                    keeps = @Keeps,
+                    public = @Public
+                 WHERE id = @Id
             ", keepData);
             if (i > 0)
             {
@@ -88,6 +91,26 @@ namespace keepr.Repositories
             return null;
         }
 
+        // public Keep UpdateViews(Keep keep, Keep keepData)
+        // {
+        //     var i = _db.Execute(@"
+        //         UPDATE keeps SET
+        //             id = @Id,
+        //             img = @Img,
+        //             link = @Link,
+        //             description = @Description,
+        //             userId = @UserId,
+        //             views = @Views + 1,
+        //             keeps = @Keeps,
+        //             public = @Public
+        //          WHERE id = @Id
+        //     ", keepData);
+        //     if (i > 0)
+        //     {
+        //         return keepData;
+        //     }
+        //     return null;
+        // }
         public Keep DeleteKeep(Keep keep)
         {
             var i = _db.Execute(@"

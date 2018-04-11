@@ -29,6 +29,12 @@ namespace keepr.Controllers
             return _repo.GetKeepsByVault(vaultId);
         }
 
+        //Count how many times a keep has been kept
+        [HttpGet("keepcount")]
+        public int KeepCount(Keep keep){
+            return _repo.KeepCount(keep.Id);
+        }
+
         [HttpPost]
         public Vaultkeep AddVaultkeep([FromBody]Vaultkeep vaultkeep)
         {

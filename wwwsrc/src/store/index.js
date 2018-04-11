@@ -78,7 +78,6 @@ export default new vuex.Store({
                     commit('setActiveKeeps', res.data)
                 })
         },
-
         getAllKeeps({ commit, dispatch }, payload) {
             api.get('keeps')
                 .then(res => {
@@ -112,6 +111,11 @@ export default new vuex.Store({
             api.post('vaultkeeps', payload)
                 .then(res => {
                     console.log("RES.DATA: ", res.data)
+                    var dispatchedPayload =
+                    {
+                        keepId: res.data.keepId
+                    }
+                    dispatch('keepCount', dispatchedPayload)
                 })
         },
         getVaultKeeps({ commit, dispatch }, payload) {
@@ -146,14 +150,19 @@ export default new vuex.Store({
                 })
         },
         updateViews({ commit, dispatch }, payload) {
-            console.log("Payload: ", payload)
-            api.put('keeps/' + payload.keep.id, payload.keep)
-                .then(res => {
+            api.put('keeps/' + payload.id, payload)
+            .then(res => {
+                debugger
                     console.log("RES.DATA: ", res.data)
-                    // commit('setKeeps', res.data)
+                    commit('setKeeps', res.data)
                 })
         },
-
+        keepCount({commit, dispatch}, payload) {
+            api.get('vaultkeeps/keepcount', payload.keepId)
+                .then(res => {
+                    console.log("KEEP COUNT RES: ", res)
+                })
+        },
         //region VAULTS
         addVault({ commit, dispatch }, payload) {
             api.post('vaults', payload)
@@ -193,7 +202,7 @@ export default new vuex.Store({
                     dispatch('getUserVaults', payload);
                 })
         },
-        // endregion VAULTS
+        //endregion VAULTS
 
         //region START AUTH ROUTES
         login({ commit, dispatch }, payload) {
