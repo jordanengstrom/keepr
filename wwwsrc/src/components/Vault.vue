@@ -46,6 +46,7 @@
                 {   userId: this.user.userId,
                     vaultId: this.$route.params.vaultId
                 })
+            this.$store.dispatch('getVaultKeeps', { vaultId: this.$route.params.vaultId })
         },
         methods: {
             addKeep(vault) {
@@ -56,16 +57,6 @@
                         description: this.newKeep.description,
                         userId: vault.userId,
                         vaultId: vault.id
-                    })
-            },
-            addToVault(vault, keep, user){
-                // console.log("Vault: ", vault)
-                // console.log("Keep: ", keep)
-                // console.log("User: ", user)
-                this.$store.dispatch('addToVault', 
-                    {   vaultId: vault.id,
-                        keepId: keep.id,
-                        userId: user.id
                     })
             }
         },

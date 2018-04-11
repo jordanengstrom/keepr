@@ -22,50 +22,19 @@ namespace keepr.Repositories
                 link,
                 description,
                 userId,
-                views
+                views,
+                public
             ) VALUES (
                 @Img,
                 @Link,
                 @Description,
                 @UserId,
-                @Views
+                @Views,
+                @Public
             ); SELECT LAST_INSERT_ID()", keep);
             keep.Id = id;
             return keep;
         }
-            // construct a keep
-    //         Keep keep = new Keep()
-    //         {
-    //             Img = keepData.Img,
-    //             Link = keepData.Link,
-    //             Description = keepData.Description,
-    //             UserId = keepData.UserId
-    //         };
-
-    //         // run a sql command
-    //         var success = _db.Execute(@"
-    //     INSERT INTO keeps(
-    //       img,
-    //       link, 
-    //       description,
-    //       userId,
-    //       views
-    //     ) VALUES(
-    //       @Img,
-    //       @Link,
-    //       @Description,
-    //       @UserId,
-    //       @Views
-    //     )
-    //   ", keep);
-    //         if (success < 1)
-    //         {
-    //             throw new Exception("Unable to create keep");
-    //         }
-    //         // return created keep
-    //         return keep;
-    // }
-
         //Find one
         public Keep GetKeepById(int id)
         {
@@ -107,7 +76,8 @@ namespace keepr.Repositories
                     img = @Img,
                     link = @Link,
                     description = @Description,
-                    userId = @UserId
+                    userId = @UserId,
+                    public = @Public
                 WHERE id = @Id
             ", keepData);
             if (i > 0)

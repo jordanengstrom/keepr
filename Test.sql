@@ -25,6 +25,8 @@
 --     link VARCHAR(255) NOT NULL,
 --     description VARCHAR(255) NOT NULL,
 --     userId VARCHAR(255),
+--     views int NOT NULL,
+--     public bool NOT NULL,
 --     INDEX userId (userId),
 --     FOREIGN KEY (userId)
 --         REFERENCES users(id)

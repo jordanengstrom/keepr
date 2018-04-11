@@ -25,7 +25,7 @@
                         <div class="card-body">
                             <!-- <h5 class="card-title">Card title</h5> -->
                             <p class="card-text">{{keep.description}}</p>
-                            <a :href="`${keep.link}`" class="btn btn-primary">go</a>
+                            <a :href="`${keep.link}`" @click="updateViews(keep)" class="btn btn-primary">go</a>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
@@ -84,6 +84,9 @@
             },
             searchKeeps() {
                 this.$store.dispatch('searchKeeps', {query: this.searchQuery.query})
+            },
+            updateViews(keep) {
+                this.$store.dispatch('updateViews', {keep: keep})
             }
         },
         components: {

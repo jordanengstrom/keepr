@@ -18,5 +18,6 @@ namespace keepr.Models
         public string UserId { get; set; }
         [Required]
         public int Views { get; set; }
+        public bool Public { get; set; }
     }
 }

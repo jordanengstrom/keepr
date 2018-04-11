@@ -58,9 +58,12 @@ namespace keepr.Repositories
         //Find many
         public IEnumerable<Vaultkeep> GetKeepsByVault(int vaultId)
         {
+            //come back to this
             return _db.Query<Vaultkeep>(@"
-                SELECT * FROM vaultkeeps WHERE vaultId = @VaultId
-            ", new {VaultId = vaultId});
+                SELECT * FROM vaultkeeps vk
+                    INNER JOIN keeps k ON k.id = vk.keepId 
+                WHERE (vaultId = 1)
+            ", new { VaultId = vaultId });
         }
         public Vaultkeep UpdateVaultkeep(Vaultkeep vaultkeep, Vaultkeep vaultkeepData)
         {
@@ -78,7 +81,6 @@ namespace keepr.Repositories
             }
             return null;
         }
-
         public Vaultkeep DeleteVaultkeep(Vaultkeep vaultkeep)
         {
             var i = _db.Execute(@"
