@@ -79,6 +79,7 @@
                         keepId: keep.id,
                         userId: user.id
                     })
+                this.keepCount(keep)
             },
             searchKeeps() {
                 this.$store.dispatch('searchKeeps', {query: this.searchQuery.query})
@@ -87,7 +88,7 @@
                 this.$store.dispatch('updateViews', keep)
             },
             keepCount(keep) {
-                this.$store.dispatch('keepCount', {keepId: keep.id})
+                this.$store.dispatch('keepCount', keep)
             }
         },
         components: {

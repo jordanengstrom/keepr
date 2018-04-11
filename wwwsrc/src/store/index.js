@@ -107,7 +107,7 @@ export default new vuex.Store({
                 })
         },
         addToVault({ commit, dispatch }, payload) {
-            console.log("addToVault Payload: ", payload)
+            // console.log("addToVault Payload: ", payload)
             api.post('vaultkeeps', payload)
                 .then(res => {
                     console.log("RES.DATA: ", res.data)
@@ -115,7 +115,7 @@ export default new vuex.Store({
                     {
                         keepId: res.data.keepId
                     }
-                    dispatch('keepCount', dispatchedPayload)
+                    // dispatch('keepCount', dispatchedPayload)
                 })
         },
         getVaultKeeps({ commit, dispatch }, payload) {
@@ -158,7 +158,8 @@ export default new vuex.Store({
                 })
         },
         keepCount({commit, dispatch}, payload) {
-            api.get('vaultkeeps/keepcount', payload.keepId)
+            console.log("KEEPCOUNT PL: ", payload)
+            api.put('keeps/keepcount', payload)
                 .then(res => {
                     console.log("KEEP COUNT RES: ", res)
                 })

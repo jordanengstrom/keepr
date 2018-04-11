@@ -91,26 +91,28 @@ namespace keepr.Repositories
             return null;
         }
 
-        // public Keep UpdateViews(Keep keep, Keep keepData)
-        // {
-        //     var i = _db.Execute(@"
-        //         UPDATE keeps SET
-        //             id = @Id,
-        //             img = @Img,
-        //             link = @Link,
-        //             description = @Description,
-        //             userId = @UserId,
-        //             views = @Views + 1,
-        //             keeps = @Keeps,
-        //             public = @Public
-        //          WHERE id = @Id
-        //     ", keepData);
-        //     if (i > 0)
-        //     {
-        //         return keepData;
-        //     }
-        //     return null;
-        // }
+        public Keep KeepCount(Keep keep, Keep keepData)
+        {
+            var i = _db.Execute(@"
+                UPDATE keeps SET
+                    id = @Id,
+                    img = @Img,
+                    link = @Link,
+                    description = @Description,
+                    userId = @UserId,
+                    views = @Views,
+                    keeps = @Keeps + 1,
+                    public = @Public
+                 WHERE id = @Id
+            ", keepData);
+            if (i > 0)
+            {
+                return keepData;
+            }
+            return null;
+        }
+
+
         public Keep DeleteKeep(Keep keep)
         {
             var i = _db.Execute(@"

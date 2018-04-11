@@ -58,6 +58,13 @@ namespace keepr.Controllers
             return _repo.UpdateViews(keep, keepData);
         }
 
+        [HttpPut("keepcount")]
+        public Keep KeepCount([FromBody]Keep keepData)
+        {
+            Keep keep = _repo.GetKeepById(keepData.Id);
+            return _repo.KeepCount(keep, keepData);
+        }
+
         [HttpDelete("{id}")]
         public Keep DeleteKeep(Keep keep) {
           return _repo.DeleteKeep(keep);
