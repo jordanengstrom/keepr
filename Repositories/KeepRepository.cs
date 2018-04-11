@@ -68,7 +68,7 @@ namespace keepr.Repositories
                 SELECT * FROM keeps
             ");
         }
-        public Keep UpdateKeep(Keep keep, Keep keepData)
+        public Keep UpdateViews(Keep keep, Keep keepData)
         {
             var i = _db.Execute(@"
                 UPDATE keeps SET
@@ -77,7 +77,8 @@ namespace keepr.Repositories
                     link = @Link,
                     description = @Description,
                     userId = @UserId,
-                    public = @Public
+                    public = @Public,
+                    views = @Views + 1
                 WHERE id = @Id
             ", keepData);
             if (i > 0)

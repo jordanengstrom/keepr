@@ -66,30 +66,30 @@ export default new vuex.Store({
         },
         getActiveKeeps({ commit, dispatch }, payload) {
             console.log("GET AK PAYLOAD: ", payload)
-            for (var i = 0; i < payload.vaultkeeps.length; i++) {
-                var keepId = payload.vaultkeeps[i].keepId
-                dispatch('getKeepById', { keepId: keepId })
+            for (var i = 0; i < payload.length; i++) {
+                var keepId = payload[i].keepId
+                dispatch('getActiveKeepById', { keepId: keepId })
             }
         },
-        getKeepById({ commit, dispatch }, payload) {
+        getActiveKeepById({ commit, dispatch }, payload) {
             // console.log("GETKEEPBYID: ", payload)
             api.get('/keeps/' + payload.keepId)
                 .then(res => {
                     commit('setActiveKeeps', res.data)
                 })
         },
+
         getAllKeeps({ commit, dispatch }, payload) {
             api.get('keeps')
                 .then(res => {
                     var out = []
                     for (var i = 0; i < res.data.length; i++) {
                         var keepElem = res.data[i]
-                        console.log("RES.DATA: ", res.data)
                         if (keepElem.public) {
                             out.push(keepElem)
                         }
                     }
-                    // console.log("KEEPS RES.DATA: ", res.data)
+                    console.log("PUBLIC KEEPS: ", out)
                     commit('setKeeps', out)
                 })
         },
@@ -119,6 +119,7 @@ export default new vuex.Store({
                 .then(res => {
                     // console.log("VAULT KEEPS: ", res.data);
                     commit('setVaultKeeps', res.data)
+                    dispatch('getActiveKeeps', res.data)
                 })
         },
         getUserKeeps({ commit, dispatch }, payload) {
@@ -145,7 +146,8 @@ export default new vuex.Store({
                 })
         },
         updateViews({ commit, dispatch }, payload) {
-            api.get('keeps/' + payload.keep.id)
+            console.log("Payload: ", payload)
+            api.put('keeps/' + payload.keep.id, payload.keep)
                 .then(res => {
                     console.log("RES.DATA: ", res.data)
                     // commit('setKeeps', res.data)

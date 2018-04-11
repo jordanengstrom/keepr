@@ -52,10 +52,10 @@ namespace keepr.Controllers
         // }
   
         [HttpPut("{id}")]
-        public Keep UpdateKeep([FromBody]Keep keepData)
+        public Keep UpdateViews([FromBody]Keep keepData)
         {
             Keep keep = _repo.GetKeepById(keepData.Id);
-            return _repo.UpdateKeep(keep, keepData);
+            return _repo.UpdateViews(keep, keepData);
         }
 
         [HttpDelete("{id}")]

@@ -82,7 +82,7 @@
             //         vaultId: this.$route.params.vaultId
             //     })
             this.$store.dispatch('getVaultKeeps', { vaultId: this.$route.params.vaultId })
-            return this.$store.dispatch('getActiveKeeps', { vaultkeeps: this.$store.state.vaultkeeps })
+            // this.$store.dispatch('getActiveKeeps', { vaultkeeps: this.$store.state.vaultkeeps })
         },
         methods: {
             addKeep(vault) {
