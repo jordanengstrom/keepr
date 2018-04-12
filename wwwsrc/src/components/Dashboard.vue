@@ -14,7 +14,7 @@
                         <label for="vault-description">Vault Description</label>
                         <input v-model="newVault.description" type="text" class="form-control" id="vault-description" placeholder="What goes in this vault?">
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn green-btn">Submit</button>
                 </form>
             </div>
         </div>
@@ -24,7 +24,9 @@
                     <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
                             <router-link :to="{path: '/vault/' + vault.id }">
-                                <h5 class="mb-1">{{vault.name}}</h5>
+                                <div class="name-click">
+                                    <h5 class="mb-1">{{vault.name}}</h5>
+                                </div>
                             </router-link>
                             <div v-if="updatedFormBool == true  && vaultId == vault.id">
                                 <form @submit.prevent="updateVault(user, vault)">
@@ -36,20 +38,22 @@
                                         <label for="vault-description">Update vault Description</label>
                                         <input v-model="updatedVault.description" type="text" class="form-control" id="vault-description" placeholder="What goes in this vault?">
                                     </div>
-                                    <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                                    <button type="submit" class="btn green-btn">Submit</button>
                                 </form>
                             </div>
-                            <i data-toggle="dropdown" class="fas fa-ellipsis-v"></i>
+                            <div class="ellipsis" data-toggle="dropdown">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </div>
                             <div class="dropdown-menu">
                                 <div class="dropdown-item">
-                                    <button @click="deleteVault(user, vault)">delete</button>
+                                    <p @click="deleteVault(user, vault)">delete</p>
                                 </div>
                                 <div class="dropdown-item">
-                                    <button @click="updatedFormBool = !updatedFormBool, vaultId = vault.id">update</button>
+                                    <p @click="updatedFormBool = !updatedFormBool, vaultId = vault.id">update</p>
                                 </div>
                             </div>
                         </div>
-                        <p class="mb-1">{{vault.description}}</p>
+                        <p class="mb-1"></p><em>{{vault.description}}</em></p>
                     </a>
                 </div>
             </div>
@@ -119,6 +123,22 @@
 </script>
 
 <style scoped>
+    h5 {
+        color: rgba(87, 46, 60, 0.85);
+        font-weight: 700;
+    }
+
+    .green-btn {
+        background-color: #5D7638;
+        outline-color: #5D7638;
+        color: #ffffff;
+    }
+
+    .name-click {
+        padding: 0.5rem;
+        cursor: pointer;
+    }
+
     .list-group-item {
         margin-bottom: 2rem;
     }
@@ -128,6 +148,11 @@
         margin-top: 1.5rem;
     }
 
+    .ellipsis {
+        padding: 0.5rem;
+        cursor: pointer;
+    }
+
     a:hover {
         text-decoration: none;
         cursor: pointer;
@@ -135,6 +160,11 @@
 
     a:-webkit-any-link {
         cursor: default !important;
+    }
+
+    h2 {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
     }
 
     form {

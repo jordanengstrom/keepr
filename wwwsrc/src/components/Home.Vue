@@ -6,7 +6,8 @@
             <div class="col-sm-9">
                 <form @submit.prevent="searchKeeps">
                     <div class="form-group">
-                        <input type="query" v-model="searchQuery.query" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="What do you want to see?">
+                        <input type="query" v-model="searchQuery.query" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            placeholder="What do you want to see?">
                     </div>
                     <button type="submit" class="btn">Submit</button>
                 </form>
@@ -23,21 +24,36 @@
                     <div class="card">
                         <img class="card-img-top" :src="`${keep.img}`" alt="Card image cap">
                         <div class="card-body">
-                            <!-- <h5 class="card-title">Card title</h5> -->
-                            <p class="card-text">{{keep.description}}</p>
-                            <p class="card-text">Views: {{keep.views}}</p>
-                            <p class="card-text">Keeps: {{keep.keeps}}</p>
-                            <a :href="`${keep.link}`" @click="updateViews(keep)" class="btn btn-primary">go</a>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    Keep
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <div class="dropdown-item" v-for="vault in vaults">
-                                        <p @click="addToVault(vault, keep, user)">
-                                            {{vault.name}}
-                                        </p>
+                            <div>
+                                <p class="card-text">{{keep.description}}</p>
+                            </div>
+                            <div class="col-align">
+                                <div>
+                                    <p class="card-text">Views: {{keep.views}}</p>
+                                </div>
+                                <div>
+                                    <p class="card-text">Keeps: {{keep.keeps}}</p>
+                                </div>
+                            </div>
+                            <div class="col-align">
+                                <div>
+                                    <a :href="`${keep.link}`" @click="updateViews(keep)" class="btn btn-eye">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </div>
+                                <div>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            K
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <div class="dropdown-item" v-for="vault in vaults">
+                                                <p @click="addToVault(vault, keep, user)">
+                                                    {{vault.name}}
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -73,16 +89,17 @@
             this.$store.dispatch('getAllKeeps')
         },
         methods: {
-            addToVault(vault, keep, user){
-                this.$store.dispatch('addToVault', 
-                    {   vaultId: vault.id,
+            addToVault(vault, keep, user) {
+                this.$store.dispatch('addToVault',
+                    {
+                        vaultId: vault.id,
                         keepId: keep.id,
                         userId: user.id
                     })
                 this.keepCount(keep)
             },
             searchKeeps() {
-                this.$store.dispatch('searchKeeps', {query: this.searchQuery.query})
+                this.$store.dispatch('searchKeeps', { query: this.searchQuery.query })
             },
             updateViews(keep) {
                 this.$store.dispatch('updateViews', keep)
@@ -111,8 +128,32 @@
 </script>
 
 <style scoped>
+    .btn-eye {
+        background-color: #5D7638;
+        outline-color: #5D7638;
+        color: #ffffff;
+    }
+
     .results {
         margin-top: 2rem;
+    }
+
+    .col-align {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    #dropdownMenuButton {
+        width: 3rem;
+    }
+
+    button {
+        background-color: rgba(87, 46, 60, 0.85);
+        font-weight: 700;
+        color: ivory;
+        margin: 10px;
     }
 
     .keep-row {
@@ -131,14 +172,6 @@
         border: solid 3px rgba(87, 46, 60, 0.726);
         border-radius: 10px;
         width: 25%;
-    }
-
-    button {
-        width: 40%;
-        background-color: rgba(87, 46, 60, 0.85);
-        font-weight: 700;
-        color: ivory;
-        margin: 10px;
     }
 
     .flex {
