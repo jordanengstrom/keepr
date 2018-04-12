@@ -2,51 +2,57 @@
     <div>
         <navbar></navbar>
         <h2>Welcome to your dashboard</h2>
-        <button @click="formBool = !formBool" class="new-form-button">Add a vault form</button>
+        <button @click="formBool = !formBool" class="btn new-form-button">Add a vault</button>
         <div v-if="formBool == true">
-            <form @submit.prevent="addVault(user)">
-                <div class="form-group">
-                    <label for="vault-name">Vault Name</label>
-                    <input v-model="newVault.name" type="text" class="form-control" id="vault-name" aria-describedby="form name" placeholder="Name your vault">
-                </div>
-                <div class="form-group">
-                    <label for="vault-description">Vault Description</label>
-                    <input v-model="newVault.description" type="text" class="form-control" id="vault-description" placeholder="What goes in this vault?">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+            <div class="row form-row">
+                <form @submit.prevent="addVault(user)">
+                    <div class="form-group">
+                        <label for="vault-name">Vault Name</label>
+                        <input v-model="newVault.name" type="text" class="form-control" id="vault-name" aria-describedby="form name" placeholder="Name your vault">
+                    </div>
+                    <div class="form-group">
+                        <label for="vault-description">Vault Description</label>
+                        <input v-model="newVault.description" type="text" class="form-control" id="vault-description" placeholder="What goes in this vault?">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
         </div>
         <div class="list-group" v-for="vault in vaults">
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                    <router-link :to="{path: '/vault/' + vault.id }">
-                        <h5 class="mb-1">{{vault.name}}</h5>
-                    </router-link>
-                    <div v-if="updatedFormBool == true  && vaultId == vault.id">
-                        <form @submit.prevent="updateVault(user, vault)">
-                            <div class="form-group">
-                                <label for="vault-name">Update vault Name</label>
-                                <input v-model="updatedVault.name" type="text" class="form-control" id="vault-name" aria-describedby="form name" placeholder="Name your vault">
+            <div class="row list-group-row">
+                <div class="col-sm-9">
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <router-link :to="{path: '/vault/' + vault.id }">
+                                <h5 class="mb-1">{{vault.name}}</h5>
+                            </router-link>
+                            <div v-if="updatedFormBool == true  && vaultId == vault.id">
+                                <form @submit.prevent="updateVault(user, vault)">
+                                    <div class="form-group">
+                                        <label for="vault-name">Update vault Name</label>
+                                        <input v-model="updatedVault.name" type="text" class="form-control" id="vault-name" aria-describedby="form name" placeholder="Name your vault">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="vault-description">Update vault Description</label>
+                                        <input v-model="updatedVault.description" type="text" class="form-control" id="vault-description" placeholder="What goes in this vault?">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                                </form>
                             </div>
-                            <div class="form-group">
-                                <label for="vault-description">Update vault Description</label>
-                                <input v-model="updatedVault.description" type="text" class="form-control" id="vault-description" placeholder="What goes in this vault?">
+                            <i data-toggle="dropdown" class="fas fa-ellipsis-v"></i>
+                            <div class="dropdown-menu">
+                                <div class="dropdown-item">
+                                    <button @click="deleteVault(user, vault)">delete</button>
+                                </div>
+                                <div class="dropdown-item">
+                                    <button @click="updatedFormBool = !updatedFormBool, vaultId = vault.id">update</button>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                    </div>
-                    <i data-toggle="dropdown" class="fas fa-ellipsis-v"></i>
-                    <div class="dropdown-menu">
-                        <div class="dropdown-item">
-                            <button @click="deleteVault(user, vault)">delete</button>
                         </div>
-                        <div class="dropdown-item">
-                            <button @click="updatedFormBool = !updatedFormBool, vaultId = vault.id">update</button>
-                        </div>
-                    </div>
+                        <p class="mb-1">{{vault.description}}</p>
+                    </a>
                 </div>
-                <p class="mb-1">{{vault.description}}</p>
-            </a>
+            </div>
         </div>
     </div>
 </template>
@@ -117,6 +123,11 @@
         margin-bottom: 2rem;
     }
 
+    .list-group-row {
+        justify-content: center;
+        margin-top: 1.5rem;
+    }
+
     a:hover {
         text-decoration: none;
         cursor: pointer;
@@ -130,7 +141,27 @@
         margin-bottom: 2rem;
     }
 
+    .form-row {
+        justify-content: center;
+    }
+
     .new-form-button {
+        margin-bottom: 4rem;
+        width: 40%;
+        background-color: rgba(87, 46, 60, 0.85);
+        font-weight: 700;
+        color: ivory;
+        margin: 10px;
+    }
+
+    /* come back to this */
+
+    .submit-btn {
         margin-bottom: 2rem;
+        width: 40%;
+        background-color: rgba(87, 46, 60, 0.85);
+        font-weight: 700;
+        color: ivory;
+        margin: 10px;
     }
 </style>

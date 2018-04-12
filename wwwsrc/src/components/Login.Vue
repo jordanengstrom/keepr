@@ -22,7 +22,7 @@
                                 <label>Password</label>
                                 <input v-model="loginUser.password" class="form-control" type="password" placeholder="Password">
                             </div>
-                            <button class="btn btn-block btn-outline-success" type="submit">login</button>
+                            <button class="btn btn-block login-btn" type="submit">login</button>
                             <!-- <button class="btn btn-block btn-outline-info" @click="loginForm = !loginForm">create account</button> -->
                         </form>
                     </div>
@@ -40,15 +40,15 @@
                                 <label>Password</label>
                                 <input v-model="signupUser.password" class="form-control" type="password" placeholder="Password" required>
                             </div>
-                            <button class="btn btn-block btn-outline-success" type="submit">signup</button>
+                            <button class="btn btn-block login-btn" type="submit">signup</button>
                         </form>
                     </div>
                     <div @click="loginForm = !loginForm">
                         <div v-if="loginForm == false">
-                            <button class="btn btn-block btn-outline-info">back to login</button>
+                            <button class="btn create-button btn-block">back to login</button>
                         </div>
                         <div v-if="loginForm == true">
-                            <button class="btn btn-block btn-outline-info">create account</button>
+                            <button class="btn create-button btn-block">create account</button>
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                 signupUser: {}
             }
         },
-        mounted () {
+        mounted() {
             this.$store.dispatch('clearActiveKeeps')
         },
         methods: {
@@ -90,6 +90,12 @@
     a:hover {
         text-decoration: none;
     }
+
+    /* .btn-success:active:focus {
+        color: #ffffff;
+        background-color: #161617;
+        border-color: #494F57;
+    } */
 
     .login-holder {
         margin-top: 3rem;
@@ -145,26 +151,34 @@
         font-family: 'Paytone One', sans-serif;
     }
 
-    .btn-outline-success {
+    .login-btn {
+        background-color: #ffffff;
         color: #72655C;
         border-color: #72655C;
     }
 
-    .btn-outline-success:hover {
+    .login-btn:hover {
         color: #fff;
         border-color: #72655C;
         background-color: #72655C;
     }
 
-    .btn-outline-info {
-        border-color: #7798B9;
-        color: #7798B9;
+    .login-btn:active:focus {
+        color: #fff;
+        border-color: #72655C;
+        background-color: #72655C;
+        outline-color: none;
     }
 
-    .btn-outline-info:hover {
+    .create-button {
+        border-color: #7798B9;
+        color: #7798B9;
+        background: #ffffff;
+    }
+
+    .create-button:hover {
         color: #fff;
         border-color: #7798B9;
         background-color: #7798B9;
     }
-    
 </style>
