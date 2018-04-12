@@ -56,9 +56,9 @@ namespace keepr.Repositories
             return vaultkeep;
         }
         //Find many
-        public IEnumerable<Vaultkeep> GetKeepsByVault(int vaultId)
+        public IEnumerable<Keep> GetKeepsByVault(int vaultId)
         {
-            return _db.Query<Vaultkeep>(@"
+            return _db.Query<Keep>(@"
                 SELECT * FROM vaultkeeps vk
                     INNER JOIN keeps k ON k.id = vk.keepId 
                 WHERE (vaultId = @VaultId)

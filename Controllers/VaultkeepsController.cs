@@ -24,7 +24,7 @@ namespace keepr.Controllers
 
         //Find keeps by vault
         [HttpGet("report/{vaultId}")]
-        public IEnumerable<Vaultkeep> GetKeepsByVault(int vaultId)
+        public IEnumerable<Keep> GetKeepsByVault(int vaultId)
         {
             return _repo.GetKeepsByVault(vaultId);
         }

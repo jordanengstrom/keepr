@@ -60,9 +60,11 @@
 
 
 -- -- USE THIS LINE FOR GET KEEPS BY VAULTID
--- SELECT * FROM vaultkeeps vk
+-- SELECT *
+-- FROM vaultkeeps vk
 -- INNER JOIN keeps k ON k.id = vk.keepId 
--- WHERE (vaultId = 2)
+-- WHERE (vaultId = @VaultId)
+-- id | keepId |  vaultId | userId
 
 
 -- To start over, drop tables in this order:

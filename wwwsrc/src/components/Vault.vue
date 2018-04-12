@@ -31,24 +31,24 @@
             </div>
         </div>
         <div class="row keep-row">
-            <div v-for="activeKeep in activeKeeps" :activeKeep="activeKeep">
+            <div v-for="vaultKeep in vaultKeeps" :vaultKeep="vaultKeep">
                 <div class="card">
-                    <img class="card-img-top" :src="`${activeKeep.img}`" alt="Card image cap">
+                    <img class="card-img-top" :src="`${vaultKeep.img}`" alt="Card image cap">
                     <div class="card-body">
                         <div>
-                            <p class="card-text">{{activeKeep.description}}</p>
+                            <p class="card-text">{{vaultKeep.description}}</p>
                         </div>
                         <div class="col-align">
                             <div>
-                                <p class="card-text">Views: {{activeKeep.views}}</p>
+                                <p class="card-text">Views: {{vaultKeep.views}}</p>
                             </div>
                             <div>
-                                <p class="card-text">Keeps: {{activeKeep.views}}</p>
+                                <p class="card-text">Keeps: {{vaultKeep.keeps}}</p>
                             </div>
                         </div>
                         <div class="col-align">
                             <div>
-                                <a :href="`${activeKeep.link}`" @click="updateViews(activeKeep)" class="btn btn-eye">
+                                <a :href="`${vaultKeep.link}`" @click="updateViews(vaultKeep)" class="btn btn-eye">
                                     <i class="fas fa-eye"></i>
                                 </a>
                             </div>
@@ -60,7 +60,7 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <div class="dropdown-item" v-for="vault in vaults">
-                                            <p @click="addToVault(vault, keep, user)">
+                                            <p @click="addToVault(vault, vaultKeep)">
                                                 {{vault.name}}
                                             </p>
                                         </div>
@@ -71,7 +71,14 @@
                         <!-- stretch goal:
                              <a href="#" class="btn btn-primary">share</a> -->
                         <div>
-                            <i class="fas fa-ellipsis-h"></i>
+                            <div class="ellipsis" data-toggle="dropdown">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </div>
+                            <div class="dropdown-menu">
+                                <div class="dropdown-item">
+                                    <p @click="deleteKeep(vaultKeep, vault)">deleteKeep</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -93,16 +100,9 @@
             }
         },
         mounted() {
-            this.$store.dispatch('clearActiveKeeps')
             this.$store.dispatch('authenticate')
             this.$store.dispatch('getVaultById', { vaultId: this.$route.params.vaultId })
-            // this.$store.dispatch('getUserKeeps',
-            //     {
-            //         userId: this.user.userId,
-            //         vaultId: this.$route.params.vaultId
-            //     })
             this.$store.dispatch('getVaultKeeps', { vaultId: this.$route.params.vaultId })
-            // this.$store.dispatch('getActiveKeeps', { vaultkeeps: this.$store.state.vaultkeeps })
         },
         methods: {
             addKeep(vault) {
@@ -119,16 +119,39 @@
             },
             updateViews(keep) {
                 console.log(keep)
-                this.$store.dispatch('updateViews', { keep: keep })
+                this.$store.dispatch('updateViews', keep)
+            },
+            addToVault(vault, keep) {
+                this.$store.dispatch('addToVault',
+                    {
+                        vaultId: vault.id,
+                        keepId: keep.id,
+                        userId: vault.userId
+                        // currentVaultId: this.vault.id
+                    })
+                this.keepCount(keep, vault)
+            },
+            keepCount(keep, vault) {
+                this.$store.dispatch('keepCount',
+                    {
+                        keep: keep,
+                        vaultId: vault.id
+                    })
+            },
+            deleteKeep(vaultKeep, vault) {
+                this.$store.dispatch('deleteKeep', 
+                    {   
+                        vaultKeep: vaultKeep,
+                        vaultId: vault.id
+                    })
             }
         },
         computed: {
             vault() {
                 return this.$store.state.activeVault
             },
-            activeKeeps() {
-                // console.log(activeKeeps)
-                return this.$store.state.activeKeeps
+            vaultKeeps() {
+                return this.$store.state.vaultkeeps
             },
             vaults() {
                 return this.$store.state.vaults
@@ -141,6 +164,15 @@
 </script>
 
 <style scoped>
+    h1 {
+        margin-top: 1rem;
+    }
+    
+    .ellipsis {
+        padding: 0.5rem;
+        cursor: pointer;
+    }
+
     #dropdownMenuButton {
         width: 3rem;
     }
