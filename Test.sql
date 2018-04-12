@@ -67,6 +67,6 @@
 
 -- To start over, drop tables in this order:
 -- DROP TABLE vaultkeeps
--- DROP TABLE vaults
 -- DROP TABLE keeps
+-- DROP TABLE vaults
 -- DROP TABLE users

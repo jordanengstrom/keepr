@@ -6,7 +6,7 @@
         <button @click="formBool = !formBool" class="btn new-form-button">New Keep</button>
         <div v-if="formBool == true">
             <div class="row form-row">
-                <form @submit.prevent="addKeep(vault)">
+                <form @submit.prevent="addKeep(vault) & formBool == false">
                     <div class="form-group">
                         <label for="keep-name">Image Link</label>
                         <input v-model="newKeep.img" type="text" class="form-control" id="keep-img" aria-describedby="form name" placeholder="Link to image of content">
@@ -106,6 +106,7 @@
         },
         methods: {
             addKeep(vault) {
+                this.formBool = false
                 this.$store.dispatch('addKeep',
                     {
                         img: this.newKeep.img,
