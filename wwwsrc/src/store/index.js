@@ -56,6 +56,7 @@ export default new vuex.Store({
         //region KEEPS
         deleteKeep({ commit, dispatch }, payload) {
             console.log("DELETED PL: ", payload)
+            debugger
             api.delete('keeps/' + payload.vaultKeep.id, payload.vaultKeep)
                 .then(res => {
                     dispatch('getVaultKeeps', payload)
@@ -91,16 +92,17 @@ export default new vuex.Store({
                 })
         },
         addToVault({ commit, dispatch }, payload) {
+            console.log("ADDTOVAULT VK PL: ", payload)
             api.post('vaultkeeps', 
                 {
                     vaultId: payload.vaultId,
                     keepId: payload.keepId,
-                    uesrId: payload.userId
+                    userId: payload.userId
                 })
                 .then(res => {
+                    console.log("ADDED VK: ", res.data)
                     var dispatchedPayload = {vaultId: payload.vaultId}
-                    // this feature requires further debugging 
-                    // dispatch('getVaultKeeps', dispatchedPayload)
+                    dispatch('getVaultKeeps', dispatchedPayload)
                 })
         },
         getVaultKeeps({ commit, dispatch }, payload) {

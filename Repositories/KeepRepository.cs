@@ -111,8 +111,6 @@ namespace keepr.Repositories
             }
             return null;
         }
-
-
         public Keep DeleteKeep(Keep keep)
         {
             var i = _db.Execute(@"
