@@ -17,11 +17,11 @@ namespace keepr
 {
     public class Startup
   {
-    private readonly string _connectionString = "";
+    private readonly string _connectionString = "host=sql3.freemysqlhosting.net;port=3306;database=sql3232481;user id=sql3232481;password=a4imxGUKFs;Allow User Variables=True;";
     public Startup(IConfiguration configuration)
     {
       Configuration = configuration;
-      _connectionString = configuration.GetSection("DB").GetValue<string>("mySQLConnectionString");
+      // _connectionString = configuration.GetSection("DB").GetValue<string>("mySQLConnectionString");
     }
     public IConfiguration Configuration { get; }
     // This method gets called by the runtime. Use this method to add services to the container.

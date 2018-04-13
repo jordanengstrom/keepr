@@ -3,9 +3,10 @@ import vuex from 'vuex'
 import axios from 'axios'
 import router from '../router/index'
 
+var production = !window.location.host.includes('localhost')
+var baseUrl = production ? '//engstrom-keepr.herokuapp.com/' : '//localhost:5000/'
+// var baseUrl = 'http://localhost:5000/'
 
-// var baseUrl = production ? '//port-vue-kan-ban.herokuapp.com/' : '//localhost:3000/'
-var baseUrl = 'http://localhost:5000/'
 var auth = axios.create({
     baseURL: baseUrl + 'account/',
     withCredentials: true
